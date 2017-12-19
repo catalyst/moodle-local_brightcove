@@ -1,0 +1,120 @@
+.text-left {text-align: left;}
+.text-right {text-align: right;}
+.text-center {text-align: center;}
+#bc-selected-video {
+    margin-left: 0;
+}
+@media (min-width: 768px) {
+    #bc-selected-video {
+        margin-left: 26%;
+    }
+}
+.bc-sl-d-container {
+    border-top: 1px solid #efefef;
+}
+.bc-sl-nav .bc-sl-search {
+    padding-left: 0;
+}
+.bc-sl-nav .bc-sl-pagination {
+    padding-right: 0;
+}
+.bc-sl-nav {
+    margin: 15px 0;
+}
+.bc-sl-nav:before,
+.bc-sl-nav:after {
+    content: "";
+    display: table;
+}
+.bc-sl-nav:after {
+    clear: both;
+}
+.bc-sl-pagination .pagination {
+    margin: 0;
+}
+.bc-sl-data + .bc-sl-pagination {
+    float: none;
+    text-align: right;
+    width: 100%;
+    margin-top: 15px;
+}
+.bc-sl-d-container:first-of-type {
+    border-top: none;
+}
+.bc-selectlist-container span:not(.input-group-btn) {
+    display: block;
+}
+.bc-selectlist-container span.bc-sl-d-2-title {
+    font-weight: 600;
+}
+.bc-selectlist-container span.bc-sl-d-2-id {
+    font-size: 95%;
+}
+.bc-selectlist-container .bc-sl-d-1-thumbnail .thumbnail-position {
+    position: relative;
+    float: left;
+}
+.bc-selectlist-container .bc-sl-d-1-timestamp {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 1px 2px;
+    color: #fff;
+    font-size: 80%;
+}
+.bc-sl-data > .row {
+    padding: 5px 0;
+}
+.bc-sl-data > .row:hover {
+    background-color: #efefef;
+}
+.bc-sl-data > .row.selected {
+    background-color: #dddddd;
+}
+#bc-selected-video .bc-sl-data > .row.selected,
+#bc-selected-video .bc-sl-data > .row:hover {
+    background-color: transparent;
+}
+@media (max-width: 543px) {
+    .bc-sl-nav .bc-sl-search {
+        padding-right: 0;
+        margin-bottom: 15px;
+    }
+    .bc-sl-header {
+        display: none;
+    }
+    .bc-sl-data .row > div {
+        position: relative;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .bc-sl-data .row > div > span:not(.bc-sl-d-1-thumbnail),
+    .bc-sl-data .row > div > span > span.thumbnail-position {
+        padding-left: 30%;
+    }
+    .bc-sl-data .bc-sl-d-2 {
+        clear: both;
+    }
+    .bc-sl-data .bc-sl-d-2:before,
+    .bc-sl-data .bc-sl-d-3:before,
+    .bc-sl-data .bc-sl-d-4:before {
+        display: block;
+        position: absolute;
+        width: 25%;
+        left: 15px;
+    }
+    .bc-sl-data .bc-sl-d-2:before {
+        content: "Name";
+    }
+    .bc-sl-data .bc-sl-d-3:before {
+        content: "Status";
+    }
+    .bc-sl-data .bc-sl-d-4:before {
+        content: "Created";
+    }
+}
+.mod_brightcove__iframe iframe {
+	width: 100%;
+	height: 250px;
+}
