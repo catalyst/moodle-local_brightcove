@@ -33,5 +33,20 @@ defined('MOODLE_INTERNAL') || die;
  * @return string
  */
 function local_brightcove_before_standard_html_head() {
-    return '';
+    return local_brightcove_get_polymer_data_for_head();
+}
+
+/**
+ * Return polymer data for the page head.
+ *
+ * @return string
+ */
+function local_brightcove_get_polymer_data_for_head() {
+    $polymerlocation = "/local/brightcove/extlibs/polymer";
+
+    $data = '<script src="' . $polymerlocation . '/bower_components/webcomponentsjs/webcomponents-lite.js"></script>';
+    $data .= '<link rel="import" href="' . $polymerlocation . '/bower_components/polymer/polymer.html">';
+    $data .= '<link rel="import" href="' . $polymerlocation . '/brightcove-video.html">';
+
+    return $data;
 }

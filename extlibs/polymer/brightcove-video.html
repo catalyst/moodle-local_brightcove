@@ -1,0 +1,36 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+
+<dom-module id="brightcove-video">
+
+    <template>
+        <!-- shadow DOM goes here -->
+        <iframe width="[[width]]" height="[[height]]" src="/local/brightcove/iframe.php?id=[[videoId]]"></iframe>
+    </template>
+
+    <script>
+        class BrightcoveVideo extends Polymer.Element {
+            static get is() {
+                return 'brightcove-video';
+            }
+            static get properties() {
+                return {
+                    videoId: {
+                        type: String,
+                    },
+                    width: {
+                        type: String,
+                    },
+                    height: {
+                        type: String,
+                    },
+                }
+            }
+            constructor() {
+                super();
+
+            }
+        }
+        customElements.define(BrightcoveVideo.is, BrightcoveVideo);
+    </script>
+
+</dom-module>
