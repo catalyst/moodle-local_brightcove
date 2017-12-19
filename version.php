@@ -25,8 +25,11 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version   = 2017121500;      // The current plugin version (Date: YYYYMMDDXX).
-$plugin->release   = 2017121500;      // Same as version
+$plugin->version   = 2017121900;      // The current plugin version (Date: YYYYMMDDXX).
+$plugin->release   = 2017121900;      // Same as version
 $plugin->requires  = 2017051500;      // Requires Moodle 3.3 or later.
 $plugin->component = "local_brightcove";
 $plugin->maturity  = MATURITY_STABLE;
+$plugin->dependencies = [
+    'local_aws' => 2017071501,
+];
