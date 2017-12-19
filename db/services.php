@@ -47,7 +47,7 @@ $functions = array(
 
 // We define the services to install as pre-build services. A pre-build service is not editable by administrator.
 $services = array(
-    'Brightcove service' => array(
+    'Brightcove video service' => array(
         'functions' => array('local_brightcove_video_list', 'local_brightcove_video'),
         'restrictedusers' => 0,
         'enabled' => 1,

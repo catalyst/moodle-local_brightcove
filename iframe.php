@@ -23,23 +23,22 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use local_brightcove\brightcove_api;
+
 define('NO_MOODLE_COOKIES', true);
 
 require(__DIR__.'/../../config.php');
 
-$id = required_param('id', PARAM_INT);
+$id = optional_param('id', '', PARAM_INT);
 
-$config = get_config('local_brightcove');
+if (empty($id)) {
+    die(get_string('videoidrequired', 'local_brightcove'));
+}
 
-$pluginconfigured = true;
+$brightcove = new brightcove_api();
 
-if ($config->accountid == ''
-        || $config->playerid == ''
-        || $config->apikey == ''
-        || $config->apisecret == ''
-        || $config->oauthendpoint == ''
-        || $config->apiendpoint == '') {
-            $pluginconfigured = false;
+if (!$brightcove->is_configured()) {
+    die(get_string('notconfigured', 'local_brightcove'));
 }
 
 $PAGE->set_context(context_system::instance());
@@ -49,19 +48,13 @@ $PAGE->set_heading(format_string('Iframe'));
 $PAGE->set_pagelayout('embedded');
 $PAGE->set_focuscontrol(false);
 
-$brightcoveurl = '//players.brightcove.net/';
-$brightcoveurl .= $config->accountid;
-$brightcoveurl .= '/';
-$brightcoveurl .= $config->playerid;
-$brightcoveurl .= '_default/index';
-
 $player = new stdClass();
-$player->accountid = $config->accountid;
-$player->playerid = $config->playerid;
+$player->accountid = $brightcove->accountid;
+$player->playerid = $brightcove->playerid;
 $player->videoid = $id;
 
-$PAGE->requires->js_amd_inline("requirejs.config({paths:{'bc':['{$brightcoveurl}']}});");
-$PAGE->requires->js_call_amd('local_brightcove/brightcove', 'init', array($config->playerid));
+$PAGE->requires->js_amd_inline("requirejs.config({paths:{'bc':['{$brightcove->get_videoplayer_js_url()}']}});");
+$PAGE->requires->js_call_amd('local_brightcove/brightcove', 'init', array($brightcove->playerid));
 
 $output = $PAGE->get_renderer('local_brightcove');
 

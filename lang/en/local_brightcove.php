@@ -49,6 +49,5 @@ $string['playerid'] = 'Player ID';
 $string['playerid_help'] = 'eg 3122341508001';
 $string['pluginadministration'] = 'Brightcove administration';
 $string['search:activity'] = 'Brightcove - activity information';
-
-
-
+$string['videoidrequired'] = 'Video ID is required.';
+$string['notconfigured'] = 'Brightcove is not configured.';

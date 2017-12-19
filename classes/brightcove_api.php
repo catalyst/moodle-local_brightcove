@@ -45,6 +45,54 @@ class brightcove_api {
     protected $context;
 
     /**
+     * List of all properties.
+     * @var array
+     */
+    protected $properties = ['accountid', 'playerid', 'apikey', 'apisecret', 'oauthendpoint', 'apiendpoint', 'perpage'];
+
+    /**
+     * Account ID.
+     * @var string
+     */
+    protected $accountid;
+
+    /**
+     * Player ID
+     * @var string
+     */
+    protected $playerid;
+
+    /**
+     * API key.
+     * @var string
+     */
+    protected $apikey;
+
+    /**
+     * API secret.
+     * @var string
+     */
+    protected $apisecret;
+
+    /**
+     * Auth end point.
+     * @var string
+     */
+    protected $oauthendpoint;
+
+    /**
+     * API end point
+     * @var string
+     */
+    protected $apiendpoint;
+
+    /**
+     * Records per page.
+     * @var int
+     */
+    protected $perpage;
+
+    /**
      * Initialises the class.
      * Makes relevant configuration from config available and
      * creates Guzzle client.
@@ -54,24 +102,58 @@ class brightcove_api {
      * @throws \dml_exception
      */
     public function __construct($handler = false) {
-        $this->config = get_config('local_brightcove');
-        $this->accountid = $this->config->accountid;
-        $this->playerid = $this->config->playerid;
-        $this->apikey = $this->config->apikey;
-        $this->apisecret = $this->config->apisecret;
-        $this->oauthendpoint = $this->config->oauthendpoint;
-        $this->apiendpoint = $this->config->apiendpoint;
-        $this->limit = $this->config->perpage;
         $this->context = '';
 
-        // Allow the caller to instansite the Guzzle client
-        // with a custom handler.
+        $config = get_config('local_brightcove');
+
+        foreach ($this->properties as $name) {
+            if (!empty($config->$name)) {
+                $this->$name = $config->$name;
+            } else {
+                $this->$name = '';
+            }
+        }
+
+        // Allow the caller to instantiate the Guzzle client with a custom handler.
         if ($handler) {
             $this->client = new \GuzzleHttp\Client(['handler' => $handler]);
         } else {
             $this->client = new \GuzzleHttp\Client();
         }
+    }
 
+    /**
+     * Magic method to get properties.
+     *
+     * @param string $name A name of the property.
+     *
+     * @return mixed
+     * @throws \coding_exception
+     */
+    public function __get($name) {
+        if (!in_array($name, $this->properties)) {
+            throw new \coding_exception('Invalid property ' . $name);
+        }
+
+        return $this->$name;
+    }
+
+    /**
+     * Check if the plugin is configured.
+     *
+     * @return bool
+     */
+    public function is_configured() {
+        if ($this->accountid == ''
+            || $this->playerid == ''
+            || $this->apikey == ''
+            || $this->apisecret == ''
+            || $this->oauthendpoint == ''
+            || $this->apiendpoint == '') {
+            return false;
+        }
+
+        return true;
     }
 
     public function set_context($context) {
@@ -196,7 +278,7 @@ class brightcove_api {
 
         $url = $this->apiendpoint. 'accounts/' . $this->accountid . '/counts/videos' . $query;
         $count = $this->call_api($url);
-        $pages = ceil($count['count'] / $this->limit);
+        $pages = ceil($count['count'] / $this->perpage);
 
         return $pages;
     }
@@ -219,7 +301,7 @@ class brightcove_api {
         if ($page == 0) {
             $page = $pages;
         }
-        $offset = ($page - 1) * $this->limit;
+        $offset = ($page - 1) * $this->perpage;
 
         // Handle searching.
         if ($q != '*') {
@@ -228,7 +310,7 @@ class brightcove_api {
             $query = '';
         }
 
-        $url = $this->apiendpoint. 'accounts/' . $this->accountid . '/videos?limit='. $this->limit . '&offset=' . $offset . $query;
+        $url = $this->apiendpoint. 'accounts/' . $this->accountid . '/videos?limit='. $this->perpage . '&offset=' . $offset . $query;
         $videos = $this->call_api($url);
 
         // Format response.
