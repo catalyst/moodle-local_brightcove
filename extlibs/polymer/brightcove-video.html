@@ -3,8 +3,27 @@
 <dom-module id="brightcove-video">
 
     <template>
+        <style>
+            :host .videoWrapper {
+                position: relative;
+                height: 0;
+            }
+            :host .videoWrapper iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+
         <!-- shadow DOM goes here -->
-        <iframe width="[[width]]" height="[[height]]" src="/local/brightcove/iframe.php?id=[[videoId]]"></iframe>
+        <div style$="{{additonalStyles}}">
+            <div class="videoWrapper" style$="{{additonalWrapperStyles}}">
+                <iframe  src="/local/brightcove/iframe.php?id=[[videoId]]"></iframe>
+            </div>
+        </div>
     </template>
 
     <script>
@@ -15,19 +34,36 @@
             static get properties() {
                 return {
                     videoId: {
-                        type: String,
+                        type: String
                     },
                     width: {
-                        type: String,
+                        type: String
                     },
                     height: {
-                        type: String,
-                    },
+                        type: String
+                    }
                 }
             }
             constructor() {
                 super();
+            }
+            connectedCallback() {
+                super.connectedCallback();
+                this.setAdditionalStyles();
+            }
+            validateSize() {
+                if (!this.width || !this.height) {
+                    // Set defaults
+                    this.width = '1920';
+                    this.height = '1080';
+                }
+            }
+            setAdditionalStyles() {
+                this.validateSize();
 
+                this.paddingBottom = (this.height / this.width) * 100;
+                this.additonalWrapperStyles = 'padding-bottom: ' +  this.paddingBottom + '%;';
+                this.additonalStyles = 'max-width: ' +  this.width + 'px;';
             }
         }
         customElements.define(BrightcoveVideo.is, BrightcoveVideo);
