@@ -53,6 +53,8 @@ class local_brightcove_renderer extends core_renderer {
 
         // Load the Plugin specific stylesheet.
         $this->page->requires->css('/local/brightcove/styles.css');
+        // Allow themes override some styles.
+        $this->page->requires->css('/theme/' . $this->page->theme->name. '/style/brightcove.css');
 
         // Get the theme javascript head and footer.
         if ($jsurl = $this->page->theme->javascript_url(true)) {
