@@ -1,0 +1,21 @@
+<link rel="import"  href="https://polygit.org/polymer+^1.9.1/webcomponentsjs+^0.7.0/components/polymer/polymer.html">
+
+<dom-module id="proto-element">
+
+    <template>
+        <p>I'm a DOM element. This is my local DOM! <b>{{owner}}</b></p>
+    </template>
+
+    <script>
+        Polymer({
+            is: "proto-element",
+            properties: {
+                owner: {
+                    type: String,
+                    value: "Daniel"
+                }
+            }
+        });
+    </script>
+
+</dom-module>

@@ -33,20 +33,38 @@ defined('MOODLE_INTERNAL') || die;
  * @return string
  */
 function local_brightcove_before_standard_html_head() {
-    return local_brightcove_get_polymer_data_for_head();
+    if (core_useragent::is_ie()) {
+        return local_brightcove_get_polymer1_data_for_head();
+    } else {
+        return local_brightcove_get_polymer2_data_for_head();
+    }
 }
 
 /**
- * Return polymer data for the page head.
+ * Return polymer version 2 data for the page head.
  *
  * @return string
  */
-function local_brightcove_get_polymer_data_for_head() {
-    $polymerlocation = "/local/brightcove/extlibs/polymer";
+function local_brightcove_get_polymer2_data_for_head() {
+    $polymerlocation = "/local/brightcove/extlibs/polymer2";
 
     $data = '<script src="' . $polymerlocation . '/bower_components/webcomponentsjs/webcomponents-lite.js"></script>';
-    $data .= '<link rel="import" href="' . $polymerlocation . '/bower_components/polymer/polymer.html">';
     $data .= '<link rel="import" href="' . $polymerlocation . '/brightcove-video.html">';
 
     return $data;
 }
+
+/**
+ * Return polymer version data for the page head.
+ *
+ * @return string
+ */
+function local_brightcove_get_polymer1_data_for_head() {
+    $polymerlocation = "/local/brightcove/extlibs/polymer1";
+
+    $data = '<script src="' . $polymerlocation . '/bower_components/webcomponentsjs/webcomponents-lite.js"></script>';
+    $data .= '<link rel="import" href="' . $polymerlocation . '/brightcove-video.html">';
+
+    return $data;
+}
+
