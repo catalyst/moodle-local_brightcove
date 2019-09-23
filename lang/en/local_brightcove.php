@@ -51,3 +51,5 @@ $string['pluginadministration'] = 'Brightcove administration';
 $string['search:activity'] = 'Brightcove - activity information';
 $string['videoidrequired'] = 'Video ID is required.';
 $string['notconfigured'] = 'Brightcove is not configured.';
+// Privacy.
+$string['privacy:metadata'] = 'This plugin does not store personal data.';
